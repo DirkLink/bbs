@@ -17,7 +17,19 @@ class CommentsController < ApplicationController
   end
 
   def show
-    @comment = comments.find params[:id]
+    set_comment
     authorize! :read, @comment
   end
+
+  def destroy
+    set_comment
+    @comment.destroy
+    authorize! :destroy, @comment
+    redirect_to [@comment.post.board, @comment.post], notice: "Comment created"
+  end
+
+  private
+    def set_comment
+      @comment = Comment.find params[:id]
+    end
 end

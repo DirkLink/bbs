@@ -13,4 +13,12 @@ class ActionController::TestCase
   def setup
     @request.env["devise.mapping"] = Devise.mappings[:user]
   end
+
+  def login user=nil
+    # user = user || User.first
+    user ||= User.first
+    sign_in user
+    user
+  end
+
 end
